@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,4 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::resource('products','ProductController');
+Route::resources([
+    'products' => 'ProductController',
+    'types' => 'TypeController',
+]);
+Route::get('/languages/{language}', 'LanguageController@change')->middleware('Locale')->name('language');

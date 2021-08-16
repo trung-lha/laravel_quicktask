@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Type;
-use Illuminate\Support\Facades\DB;
 
-class ProductController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::join('types', 'types.id' , '=' ,'products.type_id')
-                ->get(['products.id', 'products.code', 'products.name as productName', 'products.price', 'products.quantity', 'types.name','products.description as productDescription']);
-        $type = Type::all();
-
-        return view('home', compact('data', 'type'));
+        //
     }
 
     /**
@@ -42,14 +36,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         if (isset($request)) {
-            $data = $request->all();
-            DB::table('products')->insert([
-                'name' => $data["name"],
-                'price' => (double)($data["price"]),
-                'quantity' => (int)($data["quantity"]),
-                'type_id' => (int)($data["type_id"]),
-            ]);
-            return redirect()->back()->with('success',"Add product is successfully");
+            Type::create($request->all());
+
+            return redirect()->back()->with('success',"Add type is successfully");
         } else {
             return redirect()->back()->with('error',"Error form add");
         }
@@ -86,17 +75,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dataUpdate = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-        ];
-        // var_dump($dataUpdate);
-        Product::where('id', $request->id)
-          ->update($dataUpdate);
-        
-        return redirect()->back()->with('success',"Update product is successfully");
+        //
     }
 
     /**
@@ -107,9 +86,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $model = Product::findOrFail($id);
-        $model->delete();
-
-        return redirect()->back()->with('success',"Delete product is successfully");
+        //
     }
 }

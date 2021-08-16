@@ -60,6 +60,7 @@ body {font-family: Arial, Helvetica, sans-serif; text-align: center;}
     align-items: center;
     width: 700px;
     margin: auto;
+    margin-bottom: 15px;
 }
 
 .customers {
@@ -148,13 +149,26 @@ body {font-family: Arial, Helvetica, sans-serif; text-align: center;}
     }
 }
 
-   /* The popup form - hidden by default */
-   .form-popup {
+/* The popup form - hidden by default */
+.form-popup {
     display: none;
     position: relative;
     right: 15px;
     border: 3px solid #f1f1f1;
     margin-top: 40px;
+}
+.form-popup form label {
+    display: flex;
+}
+.form-popup-type {
+    display: none;
+    position: relative;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    margin-top: 40px;
+}
+.form-popup-type form label {
+    display: flex;
 }
 
 /* Add styles to the form container */
@@ -214,4 +228,14 @@ body {font-family: Arial, Helvetica, sans-serif; text-align: center;}
 .td_button {
     display: flex;
     justify-content: space-evenly;
+}
+.welcome {
+    justify-content: center;
+    text-align: center;
+}
+.mess div {
+    width: 700px;
+    /* text-align: center; */
+    margin: auto;
+    margin-bottom: 15px;
 }
