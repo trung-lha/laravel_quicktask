@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Type;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreProduct;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
@@ -39,19 +40,20 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
         if (isset($request)) {
-            $data = $request->all();
+            $data = $request->validated();
             DB::table('products')->insert([
                 'name' => $data["name"],
-                'price' => (double)($data["price"]),
-                'quantity' => (int)($data["quantity"]),
-                'type_id' => (int)($data["type_id"]),
+                'price' => ($data["price"]),
+                'quantity' => ($data["quantity"]),
+                'type_id' => ($data["type_id"]),
             ]);
-            return redirect()->back()->with('success',"Add product is successfully");
+            
+            return redirect()->back()->with('success', __('index.success_add_form'));
         } else {
-            return redirect()->back()->with('error',"Error form add");
+            return redirect()->back()->with('error', __('index.error_add_form'));
         }
     }
 
@@ -84,19 +86,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProduct $request, $id)
     {
-        $dataUpdate = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-        ];
-        // var_dump($dataUpdate);
+        $validated = $request->validated();
         Product::where('id', $request->id)
-          ->update($dataUpdate);
+          ->update($validated);
         
-        return redirect()->back()->with('success',"Update product is successfully");
+        return redirect()->back()->with('success', __('index.success_update'));
     }
 
     /**

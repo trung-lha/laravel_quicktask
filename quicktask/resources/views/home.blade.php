@@ -2,10 +2,17 @@
 
 @section('content')
 <div class="title_table">
-    <h3>{{ __('index.table_name') }}</h3>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ __('index.option_display') }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{{ route('products.index') }}">{{ __('index.table_name') }}</a></li>
+            <li><a class="dropdown-item" href="{{ route('types.index') }}">{{ __('index.type_table') }}</a></li>
+        </ul>
+    </div>
     <div class="btn-group" role="group" aria-label="Basic outlined example">
       <button id="add_product_button" type="button" class="btn btn-outline-primary">{{ __('index.add_product') }}</button>
-      <button id="add_type_button" type="button" class="btn btn-outline-primary">{{ __('index.add_type') }}</button>
     </div>
 </div>
 <div>
@@ -24,27 +31,13 @@
               @endif
           </select>
           <label for="name"><b>{{ __('index.pro_form_2') }}</b></label>
-          <input type="text" placeholder="Enter name ..." name="name" id="name_add_form" required>
+          <input type="text" placeholder="{{ __('index.place_holder_name') }}" name="name" id="name_add_form" required>
           <label for="price"><b>{{ __('index.pro_form_3') }}</b></label>
-          <input type="number" placeholder="Enter price ..." name="price" id="price_add_form" required>
+          <input type="number" placeholder="{{ __('index.place_holder_price') }}" name="price" id="price_add_form" required>
           <label for="quantity"><b>{{ __('index.pro_form_4') }}</b></label>
-          <input type="number" placeholder="Enter quantity" name="quantity" id="quantity_add_form" required>
+          <input type="number" placeholder="{{ __('index.place_holder_quantity') }}" name="quantity" id="quantity_add_form" required>
           <button type="submit" class="btn btn-primary" id="add_button">{{ __('index.submit') }}</button>
           <button type="button" class="btn cancel">{{ __('index.cancel') }}</button>
-      </form>
-  </div>
-</div>
-<div>
-  <div class="form-popup-type" id="add_type_form">
-      <form class="form-container" method="post" id="add_product" action="{{ route('types.store') }}">
-        @csrf
-          <h4>{{ __('index.type_form_title') }}</h4>
-          <br>
-          <label for="name"><b>{{ __('index.type_form_1') }}</b></label>
-          <input type="text" placeholder="Enter name ..." name="name" id="name_type" required>
-
-          <button type="submit" class="btn btn-primary" id="submit_type_button">{{ __('index.submit') }}</button>
-          <button type="button" class="btn cancel" id="cancel_type">{{ __('index.cancel') }}</button>
       </form>
   </div>
 </div>

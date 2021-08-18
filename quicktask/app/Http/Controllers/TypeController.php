@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Http\Requests\StoreType;
 
 class TypeController extends Controller
 {
@@ -14,7 +15,9 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+
+        return view('type', compact('types'));
     }
 
     /**
@@ -33,10 +36,11 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreType $request)
     {
         if (isset($request)) {
-            Type::create($request->all());
+            $dataValidated = $request->validated();
+            Type::create($dataValidated);
 
             return redirect()->back()->with('success',"Add type is successfully");
         } else {
@@ -75,7 +79,14 @@ class TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataUpdate = [
+            'name' => $request->name,
+            'description' => $request->description,
+        ];
+        Type::where('id', $request->id)
+          ->update($dataUpdate);
+        
+        return redirect()->back()->with('success',"Update type is successfully");
     }
 
     /**
@@ -86,6 +97,9 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Type::findOrFail($id);
+        $model->delete();
+
+        return redirect()->back()->with('success',"Delete type is successfully");
     }
 }

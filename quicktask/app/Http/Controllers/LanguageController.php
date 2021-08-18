@@ -9,7 +9,6 @@ class LanguageController extends Controller
 {
     public function change(Request $request, $language)
     {
-        
         App::setLocale($language);
         session()->put('language', $language);
 

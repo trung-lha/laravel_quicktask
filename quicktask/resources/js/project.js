@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var display = 1;
 
-    function show_hide () {
+    function showHideAddProductForm () {
         if (display == 1){
             document.getElementById("add-form").style.display = "block";
             return display = 0;
@@ -11,17 +11,15 @@ $(document).ready(function(){
         }
     }
     $('#add_product_button').on('click',function(event) {
-        console.log("thanh cong jquery");
-        show_hide();
+        showHideAddProductForm();
     });
     $('.cancel').on('click',function(event) {
-        show_hide();
+        showHideAddProductForm();
     });
 
     var display2 = 1;
 
-    function show_hide2 () {
-        console.log("vao show_hide");
+    function showHideAddTypeForm () {
         if (display2 == 1){
             document.getElementById("add_type_form").style.display = "block";
             return display2 = 0;
@@ -31,11 +29,11 @@ $(document).ready(function(){
         }
     }
     $('#add_type_button').on('click',function(event) {
-        show_hide2();
+        showHideAddTypeForm();
     });
     $('#cancel_type').on('click',function(event) {
-        show_hide();
-        show_hide2();
+        showHideAddProductForm();
+        showHideAddTypeForm();
     });
 
     $("#editProductModal").on("show.bs.modal", function (e) {
@@ -45,22 +43,10 @@ $(document).ready(function(){
         var quantity = $(e.relatedTarget).data('quantity');
         var des = $(e.relatedTarget).data('description');
 
-        console.log(des);
         $('#passing_name').val(name);
         $('#passing_des').val(des);
         $('#passing_id').val(id);
         $('#passing_price').val(price);
         $('#passing_quantity').val(quantity);
     });
-
-    function trans(key, replace = {}) {
-        let translation = key.split('.').reduce((t, i) => t[i] || null, window.translations);
-        for (var placeholder in replace) {
-            translation = translation.replace(`:${placeholder}`, replace[placeholder]);
-        }
-    
-        return translation;
-    }
-
-    
 });
