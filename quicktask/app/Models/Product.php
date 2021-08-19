@@ -5,11 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $table = 'products';
     protected $fillable = [
+        'code',
         'name',
         'description',
-        'price'
+        'price',
+        'quantity',
     ];
 
     public function type() 

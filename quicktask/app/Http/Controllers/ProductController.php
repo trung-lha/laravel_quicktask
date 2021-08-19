@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Type;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreProduct;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductController extends Controller
 {
@@ -14,9 +17,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
-        
-        return view('home', compact('data'));
+        $data = Product::join('types', 'types.id' , '=' ,'products.type_id')
+                ->get(['products.id', 'products.code', 'products.name as productName', 'products.price', 'products.quantity', 'types.name','products.description as productDescription']);
+        $type = Type::all();
+
+        return view('home', compact('data', 'type'));
     }
 
     /**
@@ -35,9 +40,21 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
-        //
+        if (isset($request)) {
+            $data = $request->validated();
+            DB::table('products')->insert([
+                'name' => $data["name"],
+                'price' => ($data["price"]),
+                'quantity' => ($data["quantity"]),
+                'type_id' => ($data["type_id"]),
+            ]);
+            
+            return redirect()->back()->with('success', __('index.success_add_form'));
+        } else {
+            return redirect()->back()->with('error', __('index.error_add_form'));
+        }
     }
 
     /**
@@ -69,9 +86,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProduct $request, $id)
     {
-        //
+        $validated = $request->validated();
+        Product::where('id', $request->id)
+          ->update($validated);
+        
+        return redirect()->back()->with('success', __('index.success_update'));
     }
 
     /**
@@ -82,6 +103,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = Product::findOrFail($id);
+        $model->delete();
+
+        return redirect()->back()->with('success',"Delete product is successfully");
     }
 }
