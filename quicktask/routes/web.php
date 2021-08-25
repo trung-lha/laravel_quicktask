@@ -17,3 +17,7 @@ Route::resources([
     'types' => 'TypeController',
 ]);
 Route::get('/languages/{language}', 'LanguageController@change')->middleware('Locale')->name('language');
+Route::get('show-user/{id}', 'AccountController@showUser')->name('show.user');
+Route::get('show-role/{id}', 'AccountController@showRole')->name('show.role');
+Route::get('pivot/{id}', 'AccountController@testPivot')->name('pivot');
+

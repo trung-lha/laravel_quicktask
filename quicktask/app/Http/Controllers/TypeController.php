@@ -56,7 +56,8 @@ class TypeController extends Controller
      */
     public function show($id)
     {
-        //
+        $type = Type::find($id)->products->where('price','131');
+        return $type;
     }
 
     /**

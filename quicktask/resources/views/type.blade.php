@@ -51,7 +51,7 @@
                         data-id="{{ $type->id }}" data-name="{{ $type->name }}" data-description="{{ $type->description }}">
                         Update
                         </button>
-                        <form action="{{ route('types.destroy', $type->id) }}" method="POST" class="delete-btn">
+                        <form action="{{ route('types.destroy', $type->id) }}" method="post" class="delete-btn">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xoá hết loại sản phẩm này?');">
